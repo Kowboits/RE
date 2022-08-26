@@ -25,7 +25,7 @@ def contact_list_update(contacts_list):
       row[2] = names_list[2]
   return contacts_list
 
-def clear_dublacates(contacts_list):
+def update_data(contacts_list):
   for i in contacts_list:
     for j in contacts_list:
       if i[0] == j[0] and i[1] == j[1] and i != j:
@@ -39,11 +39,14 @@ def clear_dublacates(contacts_list):
           i[5] = j[5]
         if i[6] == '':
           i[6] = j[6]
-  updated_cl = []
-  for line in contacts_list:
-    if line not in updated_cl:
-      updated_cl.append(line)
-  return updated_cl
+
+def clear_dub(contacts_list):
+  for n in range(len(contacts_list)):
+    for m in contacts_list:
+      if contacts_list[n][0] == m[0] and n != contacts_list.index(m):
+        contacts_list[n] = ' '
+  contacts_list.remove(' ')
+  return contacts_list
 
 
 if __name__ == "__main__":
@@ -59,14 +62,14 @@ if __name__ == "__main__":
   lastname_index = contacts_list[0].index('lastname')
 
   contact_list_update(contacts_list)
+  update_data(contacts_list)
+  updated_contact_list = clear_dub(contacts_list)
 
-  udated_contact_list = clear_dublacates(contacts_list)
-
-  print(udated_contact_list)
+  # print(updated_contact_list)
 
   # TODO 2: сохраните получившиеся данные в другой файл
   # код для записи файла в формате CSV
   with open("phonebook.csv", "w") as f:
     datawriter = csv.writer(f, delimiter=',')
     # Вместо contacts_list подставьте свой список
-    datawriter.writerows(udated_contact_list)
+    datawriter.writerows(updated_contact_list)
